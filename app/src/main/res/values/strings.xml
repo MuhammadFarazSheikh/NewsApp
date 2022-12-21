@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NewsApp</string>
+    <string name="text_loading_label">Loading news headlines...</string>
+    <string name="text_ok">OK</string>
 </resources>

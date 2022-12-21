@@ -1,5 +1,6 @@
 package com.androidtask.newsapp.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -9,18 +10,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import com.androidtask.newsapp.R
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
 import com.androidtask.newsapp.Constants.NEWS_HEADLINE_DETAILS_ROUTE
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
+import com.androidtask.newsapp.models.NewsHeadlineDTO
+import com.androidtask.newsapp.utils.Keys.NEWS_HEADLINE_DTO
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun setupNewsListColumn(navHostController: NavHostController)
+fun setupNewsHeadlinesListRow(navHostController: NavHostController,newsHeadlineDTO: NewsHeadlineDTO)
 {
     Row(
         modifier = Modifier
@@ -28,21 +31,27 @@ fun setupNewsListColumn(navHostController: NavHostController)
             .wrapContentHeight()
             .padding(10.dp, 10.dp, 10.dp, 0.dp)
             .clickable {
-                       navHostController.navigate(NEWS_HEADLINE_DETAILS_ROUTE)
+                navHostController.navigate(
+                    NEWS_HEADLINE_DETAILS_ROUTE
+                )
             },
         content = {
 
-            GlideImage(
-                model = "https://ichef.bbci.co.uk/news/1024/branded_news/18E0/production/_128086360_gettyimages-1068966376.jpg",
+            Image(
+                painter = rememberAsyncImagePainter(
+                    model = newsHeadlineDTO.urlToImage,
+                    //placeholder = painterResource(R.mipmap.ic_launcher),
+                    error = painterResource(id = R.drawable.no_image)
+                ),
+                contentDescription ="",
                 modifier = Modifier
                     .size(50.dp)
                     .clip(CircleShape),
-                contentDescription = "",
                 contentScale = ContentScale.FillBounds
             )
 
             Text(
-                text = "Toronto: Eight teenage girls charged with killing man",
+                text = newsHeadlineDTO.title,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp,
                 color = Color.Black,
