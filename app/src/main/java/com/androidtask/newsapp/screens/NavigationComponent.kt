@@ -1,4 +1,4 @@
-package com.androidtask.newsapp.composables
+package com.androidtask.newsapp.screens
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +11,8 @@ import androidx.navigation.compose.rememberNavController
 import com.androidtask.newsapp.Constants.NEWS_HEADLINES_LIST_ROUTE
 import com.androidtask.newsapp.Constants.NEWS_HEADLINE_DETAILS_ROUTE
 import com.androidtask.newsapp.models.NewsHeadlineDTO
+import com.androidtask.newsapp.screens.newsheadlinedetails.setupNewsHeadlineDetailsScreen
+import com.androidtask.newsapp.screens.newsheadlinelist.setupNewsHeadlineSListScreen
 import com.androidtask.newsapp.utils.Keys.NEWS_HEADLINE_DTO
 
 @Composable
@@ -36,7 +38,8 @@ fun setupNavigationComponent(
                     savedStateHandle?.get<NewsHeadlineDTO>(NEWS_HEADLINE_DTO)
                     newsHeadlineDTO?.let {
                         setupNewsHeadlineDetailsScreen(
-                            it
+                            it,
+                            navController
                         )
                     }
                 },

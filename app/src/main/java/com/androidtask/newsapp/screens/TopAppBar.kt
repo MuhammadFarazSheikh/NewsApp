@@ -1,4 +1,4 @@
-package com.androidtask.newsapp.composables
+package com.androidtask.newsapp.screens
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -10,10 +10,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.androidtask.newsapp.BuildConfig
 
 @Preview
 @Composable
-fun setupTopBar()
+fun setupTopAppBar()
 {
     TopAppBar(
         modifier = Modifier
@@ -21,7 +22,7 @@ fun setupTopBar()
             .wrapContentWidth(),
         title = {
             Text(
-                text = "BBC news",
+                text = BuildConfig.NEWS_SOURCE,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black

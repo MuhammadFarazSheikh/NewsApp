@@ -1,7 +1,4 @@
-package com.androidtask.newsapp.networking
-
-import com.androidtask.newsapp.models.NewsHeadlinesApiErrorResponseDTO
-import okhttp3.ResponseBody
+package com.androidtask.newsapp.models
 
 sealed class Resource<out T> {
     data class Success<out T>(val value: T) : Resource<T>()

@@ -9,4 +9,5 @@
     <string name="text_title_label">Title:</string>
     <string name="text_description_label">Description:</string>
     <string name="text_content_label">Content:</string>
+    <string name="text_go_back">Go Back</string>
 </resources>

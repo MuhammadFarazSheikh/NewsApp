@@ -1,6 +1,5 @@
-package com.androidtask.newsapp.composables
+package com.androidtask.newsapp.screens.newsheadlinelist
 
-import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,22 +17,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import coil.compose.rememberAsyncImagePainter
 import com.androidtask.newsapp.Constants.NEWS_HEADLINE_DETAILS_ROUTE
 import com.androidtask.newsapp.models.NewsHeadlineDTO
 import com.androidtask.newsapp.utils.Keys.NEWS_HEADLINE_DTO
 
 @Composable
-fun setupNewsHeadlinesListRow(navHostController: NavHostController,newsHeadlineDTO: NewsHeadlineDTO)
-{
+fun setupNewsHeadlinesListRow(
+    navHostController: NavHostController,
+    newsHeadlineDTO: NewsHeadlineDTO
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(10.dp, 10.dp, 10.dp, 0.dp)
             .clickable {
-                navHostController.currentBackStackEntry?.savedStateHandle?.set(NEWS_HEADLINE_DTO,newsHeadlineDTO)
+                navHostController.currentBackStackEntry?.savedStateHandle?.set(
+                    NEWS_HEADLINE_DTO,
+                    newsHeadlineDTO
+                )
                 navHostController.navigate(
                     NEWS_HEADLINE_DETAILS_ROUTE
                 )
@@ -41,15 +44,16 @@ fun setupNewsHeadlinesListRow(navHostController: NavHostController,newsHeadlineD
         content = {
 
             Image(
-                painter = rememberAsyncImagePainter(
+                    painter = rememberAsyncImagePainter(
                     model = newsHeadlineDTO.urlToImage,
                     //placeholder = painterResource(R.mipmap.ic_launcher),
                     error = painterResource(id = R.drawable.no_image)
                 ),
-                contentDescription ="",
+                contentDescription = "",
                 modifier = Modifier
                     .size(50.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .align(Alignment.CenterVertically),
                 contentScale = ContentScale.FillBounds
             )
 

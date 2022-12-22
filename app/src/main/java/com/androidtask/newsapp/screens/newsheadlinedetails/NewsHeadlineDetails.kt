@@ -1,10 +1,12 @@
-package com.androidtask.newsapp.composables
+package com.androidtask.newsapp.screens.newsheadlinedetails
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,13 +18,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.androidtask.newsapp.Constants.NEWS_HEADLINES_LIST_ROUTE
 import com.androidtask.newsapp.R
 import com.androidtask.newsapp.models.NewsHeadlineDTO
 
 @Composable
 fun setupNewsHeadlineDetailsScreen(
-    newsHeadlineDTO: NewsHeadlineDTO
+    newsHeadlineDTO: NewsHeadlineDTO,
+    navHostController: NavHostController
 )
 {
     Column(
@@ -50,7 +55,8 @@ fun setupNewsHeadlineDetailsScreen(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
-                    modifier = Modifier.wrapContentHeight()
+                    modifier = Modifier
+                        .wrapContentHeight()
                         .wrapContentWidth()
                         .padding(0.dp, 8.dp, 0.dp, 0.dp)
                 )
@@ -60,7 +66,8 @@ fun setupNewsHeadlineDetailsScreen(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color.Black,
-                    modifier = Modifier.wrapContentHeight()
+                    modifier = Modifier
+                        .wrapContentHeight()
                         .wrapContentWidth()
                         .padding(0.dp, 5.dp, 0.dp, 0.dp)
                 )
@@ -72,7 +79,8 @@ fun setupNewsHeadlineDetailsScreen(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
-                    modifier = Modifier.wrapContentHeight()
+                    modifier = Modifier
+                        .wrapContentHeight()
                         .wrapContentWidth()
                         .padding(0.dp, 8.dp, 0.dp, 0.dp)
                 )
@@ -82,7 +90,8 @@ fun setupNewsHeadlineDetailsScreen(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color.Black,
-                    modifier = Modifier.wrapContentHeight()
+                    modifier = Modifier
+                        .wrapContentHeight()
                         .wrapContentWidth()
                         .padding(0.dp, 5.dp, 0.dp, 0.dp)
                 )
@@ -95,7 +104,8 @@ fun setupNewsHeadlineDetailsScreen(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
-                    modifier = Modifier.wrapContentHeight()
+                    modifier = Modifier
+                        .wrapContentHeight()
                         .wrapContentWidth()
                         .padding(0.dp, 8.dp, 0.dp, 0.dp)
                 )
@@ -105,11 +115,31 @@ fun setupNewsHeadlineDetailsScreen(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color.Black,
-                    modifier = Modifier.wrapContentHeight()
+                    modifier = Modifier
+                        .wrapContentHeight()
                         .wrapContentWidth()
                         .padding(0.dp, 5.dp, 0.dp, 0.dp)
                 )
             }
+
+            Button(
+                onClick = {
+                    navHostController.popBackStack(NEWS_HEADLINES_LIST_ROUTE,inclusive = false)
+                },
+                content = {
+                    Text(
+                        text = stringResource(R.string.text_go_back),
+                        color = Color.Black,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                },
+                shape = RoundedCornerShape(5.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.LightGray
+                ),
+                modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(0.dp,10.dp,0.dp,0.dp)
+            )
         },
         modifier = Modifier
             .fillMaxWidth()

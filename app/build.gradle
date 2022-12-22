@@ -25,9 +25,27 @@ android {
     }
 
     buildTypes {
+
+        debug{
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors{
+        BBCnews{
+            buildConfigField('String','NEWS_SOURCE','"BBC news"')
+            buildConfigField('String','NEWS_SOURCE_ID','"bbc-news"')
+        }
+        FoxNews{
+            buildConfigField('String','NEWS_SOURCE','"Fox News"')
+            buildConfigField('String','NEWS_SOURCE_ID','"fox-news"')
         }
     }
 

@@ -1,4 +1,4 @@
-package com.androidtask.newsapp.composables
+package com.androidtask.newsapp.screens.newsheadlinelist
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,7 +9,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.androidtask.newsapp.models.NewsHeadlineDTO
-import com.androidtask.newsapp.utils.openLoaderDialogue
 
 @Composable
 fun setupNewsHeadlineSListScreen(

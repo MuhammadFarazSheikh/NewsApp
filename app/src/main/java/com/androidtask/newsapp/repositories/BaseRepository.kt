@@ -1,7 +1,7 @@
 package com.androidtask.newsapp.repositories
 
 import com.androidtask.newsapp.models.NewsHeadlinesApiErrorResponseDTO
-import com.androidtask.newsapp.networking.Resource
+import com.androidtask.newsapp.models.Resource
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

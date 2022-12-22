@@ -14,17 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.DialogFragment
+import com.androidtask.newsapp.BuildConfig
 import com.androidtask.newsapp.R
-import com.androidtask.newsapp.composables.setupNavigationComponent
-import com.androidtask.newsapp.composables.setupTopBar
+import com.androidtask.newsapp.screens.setupNavigationComponent
 import com.androidtask.newsapp.interfaces.BiometricAuthCallback
 import com.androidtask.newsapp.models.NewsHeadlineDTO
-import com.androidtask.newsapp.models.TopHeadlinesApiResponseDTO
-import com.androidtask.newsapp.networking.Resource
-import com.androidtask.newsapp.utils.BiometricUtil
-import com.androidtask.newsapp.utils.handleApiError
-import com.androidtask.newsapp.utils.openAlertForMessage
-import com.androidtask.newsapp.utils.openLoaderDialogue
+import com.androidtask.newsapp.models.Resource
+import com.androidtask.newsapp.screens.setupTopAppBar
+import com.androidtask.newsapp.utils.*
 import com.androidtask.newsapp.viewmodels.NewsHeadlinesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,8 +38,8 @@ class NewsHeadlinesActivity : AppCompatActivity(), BiometricAuthCallback {
 
         init()
 
-        if (BiometricUtil.isDeviceBiometricSupport(this@NewsHeadlinesActivity)) {
-            BiometricUtil.onTouchIdOpen(
+        if (isDeviceFingerPrintSupported(this@NewsHeadlinesActivity)) {
+            openFingerPrintAuthDialoge(
                 this@NewsHeadlinesActivity,
                 this@NewsHeadlinesActivity
             )
@@ -73,7 +70,7 @@ class NewsHeadlinesActivity : AppCompatActivity(), BiometricAuthCallback {
     private fun callApiToGetNewsHeadlinesForSource()
     {
         newsHeadlinesViewModel
-            .callTopHeadlinesApiToGetNewsForSource("bbc-news")
+            .callTopHeadlinesApiToGetNewsForSource(BuildConfig.NEWS_SOURCE_ID)
             .observe(this)
             { result->
                 loaderAlertDialogueMutableState.value = false
@@ -139,29 +136,16 @@ class NewsHeadlinesActivity : AppCompatActivity(), BiometricAuthCallback {
                setupNavigationComponent(newsHeadlinesListMutableState)
             },
             topBar = {
-                setupTopBar()
+                setupTopAppBar()
             }
         )
     }
 
     override fun biometricAuthenticationError(authenticationError: String?) {
-        BiometricUtil.onTouchIdOpen(
-            this@NewsHeadlinesActivity,
-            this@NewsHeadlinesActivity
-        )
+        finish()
     }
 
     override fun biometricAuthenticationSucceeded() {
         callApiToGetNewsHeadlinesForSource()
-    }
-
-    override fun biometricTooManyAttempts() {
-    }
-
-    override fun biometricAuthenticationFailed() {
-        BiometricUtil.onTouchIdOpen(
-            this@NewsHeadlinesActivity,
-            this@NewsHeadlinesActivity
-        )
     }
 }

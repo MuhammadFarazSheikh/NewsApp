@@ -1,4 +1,4 @@
-package com.androidtask.newsapp.networking
+package com.androidtask.newsapp.utils
 
 object ApiEndPoints
 {
