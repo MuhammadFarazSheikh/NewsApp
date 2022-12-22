@@ -1,6 +1,5 @@
 package com.androidtask.newsapp.composables
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -12,9 +11,12 @@ import androidx.navigation.compose.rememberNavController
 import com.androidtask.newsapp.Constants.NEWS_HEADLINES_LIST_ROUTE
 import com.androidtask.newsapp.Constants.NEWS_HEADLINE_DETAILS_ROUTE
 import com.androidtask.newsapp.models.NewsHeadlineDTO
+import com.androidtask.newsapp.utils.Keys.NEWS_HEADLINE_DTO
 
 @Composable
-fun setupNavigationComponent(newsHeadlinesListMutableState:MutableState<ArrayList<NewsHeadlineDTO>>)
+fun setupNavigationComponent(
+    newsHeadlinesListMutableState:MutableState<ArrayList<NewsHeadlineDTO>>,
+)
 {
     var navController = rememberNavController()
     NavHost(
@@ -29,9 +31,14 @@ fun setupNavigationComponent(newsHeadlinesListMutableState:MutableState<ArrayLis
             )
             composable(
                 content = { backStackEntry->
-                    setupNewsHeadlineDetailsScreen(
-                        navController
-                    )
+                    var newsHeadlineDTO = navController?.
+                    previousBackStackEntry?.
+                    savedStateHandle?.get<NewsHeadlineDTO>(NEWS_HEADLINE_DTO)
+                    newsHeadlineDTO?.let {
+                        setupNewsHeadlineDetailsScreen(
+                            it
+                        )
+                    }
                 },
                 route = NEWS_HEADLINE_DETAILS_ROUTE
             )

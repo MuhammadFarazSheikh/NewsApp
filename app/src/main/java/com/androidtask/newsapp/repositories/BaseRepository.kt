@@ -1,6 +1,8 @@
 package com.androidtask.newsapp.repositories
 
+import com.androidtask.newsapp.models.NewsHeadlinesApiErrorResponseDTO
 import com.androidtask.newsapp.networking.Resource
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,7 +23,7 @@ abstract class BaseRepository {
             } catch (throwable: Throwable) {
                 when (throwable) {
                     is HttpException -> {
-                        Resource.Failure(false, throwable.code(), throwable.response()?.errorBody())
+                        Resource.Failure(false, throwable.code(), Gson().fromJson(throwable.response()?.errorBody()?.string(),NewsHeadlinesApiErrorResponseDTO::class.java))
                     }
                     else -> {
                         Resource.Failure(true, null, null)

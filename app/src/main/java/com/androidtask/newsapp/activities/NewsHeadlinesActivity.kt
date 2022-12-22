@@ -12,18 +12,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
+import com.androidtask.newsapp.R
 import com.androidtask.newsapp.composables.setupNavigationComponent
 import com.androidtask.newsapp.composables.setupTopBar
 import com.androidtask.newsapp.models.NewsHeadlineDTO
 import com.androidtask.newsapp.models.TopHeadlinesApiResponseDTO
 import com.androidtask.newsapp.networking.Resource
 import com.androidtask.newsapp.utils.handleApiError
+import com.androidtask.newsapp.utils.openAlertForMessage
+import com.androidtask.newsapp.utils.openLoaderDialogue
 import com.androidtask.newsapp.viewmodels.NewsHeadlinesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NewsHeadlinesActivity : AppCompatActivity() {
 
+    private lateinit var loaderAlertDialogueMutableState:MutableState<Boolean>
     private lateinit var errorMessageDialoguMutableState:MutableState<String>
     private val newsHeadlinesViewModel:NewsHeadlinesViewModel by viewModels()
     private lateinit var newsHeadlinesListMutableState:MutableState<ArrayList<NewsHeadlineDTO>>
@@ -38,6 +42,8 @@ class NewsHeadlinesActivity : AppCompatActivity() {
             ComposeView(this).apply {
                 setContent {
                     setupUIStructure()
+                    displayDialogueForErrorMessage()
+                    dislayLoaderAlertDialoge()
                 }
             }
         )
@@ -49,6 +55,7 @@ class NewsHeadlinesActivity : AppCompatActivity() {
             .callTopHeadlinesApiToGetNewsForSource("bbc-news")
             .observe(this)
             { result->
+                loaderAlertDialogueMutableState.value = false
                 when(result)
                 {
                     is Resource.Success->
@@ -56,11 +63,11 @@ class NewsHeadlinesActivity : AppCompatActivity() {
                         newsHeadlinesListMutableState.value = result.value.articles
                     }
                     is Resource.Failure->{
-                        handleApiError(result)
+                        errorMessageDialoguMutableState.value=handleApiError(result,this)
                     }
                     is Resource.Loading->
                     {
-
+                        loaderAlertDialogueMutableState.value = true
                     }
                 }
             }
@@ -68,8 +75,34 @@ class NewsHeadlinesActivity : AppCompatActivity() {
 
     private fun init()
     {
-        errorMessageDialoguMutableState = mutableStateOf("")
+        loaderAlertDialogueMutableState = mutableStateOf(false)
+        errorMessageDialoguMutableState = mutableStateOf(getString(R.string.text_close_popup))
         newsHeadlinesListMutableState = mutableStateOf(arrayListOf())
+    }
+
+    @Composable
+    fun dislayLoaderAlertDialoge()
+    {
+        if(loaderAlertDialogueMutableState.value)
+        {
+            openLoaderDialogue()
+        }
+    }
+
+    @Composable
+    fun displayDialogueForErrorMessage()
+    {
+        if(!errorMessageDialoguMutableState.value.equals(getString(R.string.text_close_popup)))
+        {
+            openAlertForMessage(
+                title = getString(R.string.text_error_title),
+                message = errorMessageDialoguMutableState.value,
+                confirmButtonListener = {
+                    finish()
+                    errorMessageDialoguMutableState.value = getString(R.string.text_close_popup)
+                }
+            )
+        }
     }
 
     // SETUP MAIN UI STRUCTURE TO SHOW ALL DATA

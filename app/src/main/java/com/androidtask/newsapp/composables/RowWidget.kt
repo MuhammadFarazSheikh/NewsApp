@@ -1,5 +1,6 @@
 package com.androidtask.newsapp.composables
 
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import coil.compose.rememberAsyncImagePainter
 import com.androidtask.newsapp.Constants.NEWS_HEADLINE_DETAILS_ROUTE
 import com.androidtask.newsapp.models.NewsHeadlineDTO
@@ -31,6 +33,7 @@ fun setupNewsHeadlinesListRow(navHostController: NavHostController,newsHeadlineD
             .wrapContentHeight()
             .padding(10.dp, 10.dp, 10.dp, 0.dp)
             .clickable {
+                navHostController.currentBackStackEntry?.savedStateHandle?.set(NEWS_HEADLINE_DTO,newsHeadlineDTO)
                 navHostController.navigate(
                     NEWS_HEADLINE_DETAILS_ROUTE
                 )

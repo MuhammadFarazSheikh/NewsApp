@@ -32,9 +32,5 @@ fun setupNewsHeadlineSListScreen(
                     .fillMaxHeight()
             )
         }
-        else
-        {
-            openLoaderDialogue()
-        }
     }
 }

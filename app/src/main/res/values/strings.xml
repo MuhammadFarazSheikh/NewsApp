@@ -2,4 +2,11 @@
     <string name="app_name">NewsApp</string>
     <string name="text_loading_label">Loading news headlines...</string>
     <string name="text_ok">OK</string>
+    <string name="text_error_network">Network error.</string>
+    <string name="text_error_internal_server_error">Internal server error</string>
+    <string name="text_close_popup">Close popup</string>
+    <string name="text_error_title">Error</string>
+    <string name="text_title_label">Title:</string>
+    <string name="text_description_label">Description:</string>
+    <string name="text_content_label">Content:</string>
 </resources>
