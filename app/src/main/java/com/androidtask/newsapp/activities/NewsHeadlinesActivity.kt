@@ -1,5 +1,6 @@
 package com.androidtask.newsapp.activities
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -12,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.fragment.app.DialogFragment
 import com.androidtask.newsapp.R
 import com.androidtask.newsapp.composables.setupNavigationComponent
 import com.androidtask.newsapp.composables.setupTopBar
@@ -44,6 +46,13 @@ class NewsHeadlinesActivity : AppCompatActivity(), BiometricAuthCallback {
                 this@NewsHeadlinesActivity,
                 this@NewsHeadlinesActivity
             )
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                supportFragmentManager.fragments.forEach {
+                    if(it is DialogFragment) {
+                        it.dialog?.setCanceledOnTouchOutside(false)
+                    }
+                }
+            }
         }
         else
         {
