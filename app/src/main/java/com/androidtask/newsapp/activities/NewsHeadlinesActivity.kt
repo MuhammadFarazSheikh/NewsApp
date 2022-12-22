@@ -15,9 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.androidtask.newsapp.R
 import com.androidtask.newsapp.composables.setupNavigationComponent
 import com.androidtask.newsapp.composables.setupTopBar
+import com.androidtask.newsapp.interfaces.BiometricAuthCallback
 import com.androidtask.newsapp.models.NewsHeadlineDTO
 import com.androidtask.newsapp.models.TopHeadlinesApiResponseDTO
 import com.androidtask.newsapp.networking.Resource
+import com.androidtask.newsapp.utils.BiometricUtil
 import com.androidtask.newsapp.utils.handleApiError
 import com.androidtask.newsapp.utils.openAlertForMessage
 import com.androidtask.newsapp.utils.openLoaderDialogue
@@ -25,7 +27,7 @@ import com.androidtask.newsapp.viewmodels.NewsHeadlinesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NewsHeadlinesActivity : AppCompatActivity() {
+class NewsHeadlinesActivity : AppCompatActivity(), BiometricAuthCallback {
 
     private lateinit var loaderAlertDialogueMutableState:MutableState<Boolean>
     private lateinit var errorMessageDialoguMutableState:MutableState<String>
@@ -36,7 +38,17 @@ class NewsHeadlinesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         init()
-        callApiToGetNewsHeadlinesForSource()
+
+        if (BiometricUtil.isDeviceBiometricSupport(this@NewsHeadlinesActivity)) {
+            BiometricUtil.onTouchIdOpen(
+                this@NewsHeadlinesActivity,
+                this@NewsHeadlinesActivity
+            )
+        }
+        else
+        {
+            callApiToGetNewsHeadlinesForSource()
+        }
 
         setContentView(
             ComposeView(this).apply {
@@ -120,6 +132,27 @@ class NewsHeadlinesActivity : AppCompatActivity() {
             topBar = {
                 setupTopBar()
             }
+        )
+    }
+
+    override fun biometricAuthenticationError(authenticationError: String?) {
+        BiometricUtil.onTouchIdOpen(
+            this@NewsHeadlinesActivity,
+            this@NewsHeadlinesActivity
+        )
+    }
+
+    override fun biometricAuthenticationSucceeded() {
+        callApiToGetNewsHeadlinesForSource()
+    }
+
+    override fun biometricTooManyAttempts() {
+    }
+
+    override fun biometricAuthenticationFailed() {
+        BiometricUtil.onTouchIdOpen(
+            this@NewsHeadlinesActivity,
+            this@NewsHeadlinesActivity
         )
     }
 }
