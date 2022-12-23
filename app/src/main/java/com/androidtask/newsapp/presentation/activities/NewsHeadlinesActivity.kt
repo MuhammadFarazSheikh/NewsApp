@@ -1,5 +1,7 @@
 package com.androidtask.newsapp.presentation.activities
 
+import android.hardware.biometrics.BiometricManager
+import android.hardware.biometrics.BiometricPrompt
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -37,7 +39,20 @@ class NewsHeadlinesActivity : AppCompatActivity(), BiometricAuthCallback {
         super.onCreate(savedInstanceState)
 
         init()
+        openBiometricAuthOrCallNewsHeadlinesApi()
+        setContentView(
+            ComposeView(this).apply {
+                setContent {
+                    setupUIStructure()
+                    displayDialogueForErrorMessage()
+                    dislayLoaderAlertDialoge()
+                }
+            }
+        )
+    }
 
+    private fun openBiometricAuthOrCallNewsHeadlinesApi()
+    {
         if (isDeviceFingerPrintSupported(this@NewsHeadlinesActivity)) {
             openFingerPrintAuthDialoge(
                 this@NewsHeadlinesActivity,
@@ -48,16 +63,6 @@ class NewsHeadlinesActivity : AppCompatActivity(), BiometricAuthCallback {
         {
             callApiToGetNewsHeadlinesForSource()
         }
-
-        setContentView(
-            ComposeView(this).apply {
-                setContent {
-                    setupUIStructure()
-                    displayDialogueForErrorMessage()
-                    dislayLoaderAlertDialoge()
-                }
-            }
-        )
     }
 
     private fun callApiToGetNewsHeadlinesForSource()
@@ -139,8 +144,8 @@ class NewsHeadlinesActivity : AppCompatActivity(), BiometricAuthCallback {
         )
     }
 
-    override fun biometricAuthenticationError(authenticationError: String) {
-        errorMessageDialoguMutableState.value = authenticationError
+    override fun biometricAuthenticationError(errorCode:Int,authenticationError: String) {
+        errorMessageDialoguMutableState.value = handleBiometricAuthError(this,errorCode, authenticationError)
     }
 
     override fun biometricAuthenticationSucceeded() {

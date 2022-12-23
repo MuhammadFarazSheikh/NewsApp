@@ -32,7 +32,7 @@ inline fun authUser(
         object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                biometricAuthCallback.biometricAuthenticationError(errString.toString())
+                biometricAuthCallback.biometricAuthenticationError(errorCode,errString.toString())
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
