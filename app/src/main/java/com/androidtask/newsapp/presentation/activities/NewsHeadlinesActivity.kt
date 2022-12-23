@@ -66,7 +66,7 @@ class NewsHeadlinesActivity : AppCompatActivity(), BiometricAuthCallback {
             .callTopHeadlinesApiToGetNewsForSource(BuildConfig.NEWS_SOURCE_ID)
             .observe(this)
             { result->
-                loaderAlertDialogueMutableState.value = false
+                showHideLoaderAlertDialoge(false)
                 when(result)
                 {
                     is Resource.Success->
@@ -78,10 +78,15 @@ class NewsHeadlinesActivity : AppCompatActivity(), BiometricAuthCallback {
                     }
                     is Resource.Loading->
                     {
-                        loaderAlertDialogueMutableState.value = true
+                        showHideLoaderAlertDialoge(true)
                     }
                 }
             }
+    }
+
+    private fun showHideLoaderAlertDialoge(isShow:Boolean)
+    {
+        loaderAlertDialogueMutableState.value = isShow
     }
 
     private fun init()
