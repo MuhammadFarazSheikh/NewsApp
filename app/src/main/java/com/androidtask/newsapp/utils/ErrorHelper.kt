@@ -1,9 +1,9 @@
 package com.androidtask.newsapp.utils
 
 import android.content.Context
-import com.androidtask.newsapp.Constants.INTERNAL_SERVER_ERROR
+import com.androidtask.newsapp.utils.Constants.INTERNAL_SERVER_ERROR
 import com.androidtask.newsapp.R
-import com.androidtask.newsapp.models.Resource
+import com.androidtask.newsapp.domain.models.Resource
 
 inline fun handleApiError(
     failure: Resource.Failure,
