@@ -1,5 +1,6 @@
 package com.androidtask.newsapp.utils
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -7,6 +8,7 @@ import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.core.content.ContextCompat
 import com.androidtask.newsapp.interfaces.BiometricAuthCallback
 
+//OPEN FINGER PRINT DIALOGE FOR USER AUTHENTICATION
 inline fun openFingerPrintAuthDialoge(
     activity: AppCompatActivity,
     biometricAuthCallback: BiometricAuthCallback
@@ -22,6 +24,7 @@ inline fun openFingerPrintAuthDialoge(
     }
 }
 
+//HANLDE USER AUTH STATE EITHER ITS ERROR OR SUCCESS
 inline fun authUser(
     activity: AppCompatActivity,
     biometricAuthCallback: BiometricAuthCallback
@@ -53,7 +56,8 @@ inline fun authUser(
         }.build())
 }
 
-inline fun isDeviceFingerPrintSupported(activity: AppCompatActivity): Boolean {
-    return BiometricManager.from(activity)
+//CHECK IF FINGER PRINT HARDWARE IS AVAILABLE AND FINGERPRINT IS CONFIGURED
+inline fun isDeviceFingerPrintSupported(context: Context): Boolean {
+    return BiometricManager.from(context)
         .canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
 }

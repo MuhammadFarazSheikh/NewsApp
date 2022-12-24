@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
+//OPEN ALERT DIALOGE FOR MESSAGE
 @Composable
 fun openAlertForMessage(title:String,message:String,confirmButtonListener:()-> Unit)
 {
@@ -58,6 +59,7 @@ fun openAlertForMessage(title:String,message:String,confirmButtonListener:()-> U
     )
 }
 
+//OPEN LOADER DIALOGE ON NEWS HEADLINES API CALL
 @Composable
 fun openLoaderDialogue()
 {

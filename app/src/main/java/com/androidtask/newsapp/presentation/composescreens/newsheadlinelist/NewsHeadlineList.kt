@@ -1,4 +1,4 @@
-package com.androidtask.newsapp.presentation.activities.screens.newsheadlinelist
+package com.androidtask.newsapp.presentation.composescreens.newsheadlinelist
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,14 +9,19 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.androidtask.newsapp.domain.models.NewsHeadlineDTO
+import com.androidtask.newsapp.presentation.viewmodels.NewsHeadlinesViewModel
 
+//SETUP SCREEN TO SHOW LIST OF NEWS HEADLINES
+//@param navHostController USED TO NAVIGATE FROM LIST TO DETAILS SCREEN
+//@param newsHeadlinesViewModel USED TO SET LIST OF HEADLINES FROM API RESPONSE
 @Composable
 fun setupNewsHeadlineSListScreen(
     navHostController: NavHostController,
-    newsHeadlinesListMutableState: MutableState<ArrayList<NewsHeadlineDTO>>
+    newsHeadlinesViewModel: NewsHeadlinesViewModel
 )
 {
-    newsHeadlinesListMutableState.value?.let { list->
+    newsHeadlinesViewModel.newsHeadlinesListMutableState.value?.let { list->
+        newsHeadlinesViewModel.showHideLoaderAlertDialoge(false)
         if(list.size>0)
         {
             LazyColumn(

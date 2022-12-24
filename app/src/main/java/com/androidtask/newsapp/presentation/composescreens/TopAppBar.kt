@@ -1,4 +1,4 @@
-package com.androidtask.newsapp.presentation.activities.screens
+package com.androidtask.newsapp.presentation.composescreens
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.androidtask.newsapp.BuildConfig
 
+//SETUP TOP APP BAR TO SHOW HEADLINE SOURCE NAME
 @Preview
 @Composable
 fun setupTopAppBar()

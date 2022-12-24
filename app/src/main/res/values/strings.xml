@@ -13,4 +13,5 @@
     <string name="text_something_wrong">Something went wrong\nPlease try again later.</string>
     <string name="error_cancel_auth">Fingerprint auth is required you cannot proceed.</string>
     <string name="error_message_wront_attempts">Open app after 30 seconds to authenticate.</string>
+    <string name="api_base_url">https://newsapi.org/v2/</string>
 </resources>

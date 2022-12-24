@@ -1,4 +1,4 @@
-package com.androidtask.newsapp.presentation.activities.screens.newsheadlinedetails
+package com.androidtask.newsapp.presentation.composescreens.newsheadlinedetails
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -24,6 +24,9 @@ import com.androidtask.newsapp.utils.Constants.NEWS_HEADLINES_LIST_ROUTE
 import com.androidtask.newsapp.R
 import com.androidtask.newsapp.domain.models.NewsHeadlineDTO
 
+//SETUP SCREEN FOR DETAILS OF NEWS HEADLINE
+//@param newsHeadlineDTO WILL BE PASSED TO ACCESS DATA
+//@param navController WILL BE USED TO NAVIGATE BACK TO LIST SCREEN
 @Composable
 fun setupNewsHeadlineDetailsScreen(
     newsHeadlineDTO: NewsHeadlineDTO,
@@ -37,7 +40,6 @@ fun setupNewsHeadlineDetailsScreen(
                 Image(
                     painter = rememberAsyncImagePainter(
                         model = newsHeadlineDTO.urlToImage,
-                        //placeholder = painterResource(R.mipmap.ic_launcher),
                         error = painterResource(id = R.drawable.no_image)
                     ),
                     contentDescription = "",

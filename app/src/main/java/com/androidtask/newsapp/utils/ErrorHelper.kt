@@ -11,26 +11,31 @@ import com.androidtask.newsapp.utils.Constants.API_KEY_INVALID
 import com.androidtask.newsapp.utils.Constants.API_KEY_MISSING
 import com.androidtask.newsapp.utils.Constants.API_PARAMETER_INVALID
 import com.androidtask.newsapp.utils.Constants.API_PARAMETER_MISSING
+import com.androidtask.newsapp.utils.Constants.FINGER_PRINT_AUTH_ERROR
+import com.androidtask.newsapp.utils.Constants.INTERNAL_SERVER_ERROR_TEXT
+import com.androidtask.newsapp.utils.Constants.NETWORK_ERROR
+import com.androidtask.newsapp.utils.Constants.OPEN_APP_AFTER_30_SECONDS
 import com.androidtask.newsapp.utils.Constants.RATE_LIMITED
+import com.androidtask.newsapp.utils.Constants.SOMETHING_WENT_WRONG
 import com.androidtask.newsapp.utils.Constants.SOURCE_DOESNOT_EXIST
 import com.androidtask.newsapp.utils.Constants.SOURCE_TOO_MANY
 import com.androidtask.newsapp.utils.Constants.UNEXPECTED_ERROR
 
+//HANDLE NEWS HEADLINES API CALL ERRORS CODE AND DISPLAY MESSAGES FOR USER
 inline fun handleApiError(
     failure: Resource.Failure,
-    context: Context
 ): String
 {
     if(failure.isNetworkError)
     {
-        return context.getString(R.string.text_error_network)
+        return NETWORK_ERROR
     }
     else if(failure.errorCode == INTERNAL_SERVER_ERROR)
     {
-        return context.getString(R.string.text_error_internal_server_error)
+        return INTERNAL_SERVER_ERROR_TEXT
     }
     else {
-        var apiResponseMessage = context.getString(R.string.text_error_internal_server_error)
+        var apiResponseMessage = INTERNAL_SERVER_ERROR_TEXT
         failure.newsHeadlinesApiErrorResponseDTO?.let { data->
             when(data.code)
             {
@@ -42,23 +47,24 @@ inline fun handleApiError(
                 API_PARAMETER_MISSING,
                 RATE_LIMITED,
                 SOURCE_TOO_MANY,
-                SOURCE_DOESNOT_EXIST-> apiResponseMessage = context.getString(R.string.text_something_wrong)
-                UNEXPECTED_ERROR-> apiResponseMessage = context.getString(R.string.text_error_internal_server_error)
+                SOURCE_DOESNOT_EXIST-> apiResponseMessage = SOMETHING_WENT_WRONG
+                UNEXPECTED_ERROR-> apiResponseMessage = INTERNAL_SERVER_ERROR_TEXT
             }
         }
         return apiResponseMessage
     }
 }
 
+//HANDLE FINGERPRINT AUTH ERROR CODE AND DISPLAY MESSAGE FOR USER
 inline fun handleBiometricAuthError(
-    context: Context,
     errorCode:Int,
     errorMessage:String
 ):String
 {
     when(errorCode)
     {
-        BiometricPrompt.ERROR_NEGATIVE_BUTTON -> return context.getString(R.string.error_cancel_auth)
-        else -> return errorMessage+context.getString(R.string.error_message_wront_attempts)
+        BiometricPrompt.ERROR_NEGATIVE_BUTTON -> return FINGER_PRINT_AUTH_ERROR
+        BiometricPrompt.ERROR_LOCKOUT -> return errorMessage+OPEN_APP_AFTER_30_SECONDS
+        else -> return FINGER_PRINT_AUTH_ERROR
     }
 }

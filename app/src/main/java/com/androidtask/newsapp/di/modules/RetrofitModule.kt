@@ -1,10 +1,12 @@
 package com.androidtask.newsapp.di.modules
 
-import com.androidtask.newsapp.utils.Constants.HEADLINES_API_BASE_URL
+import android.content.Context
+import com.androidtask.newsapp.R
 import com.androidtask.newsapp.data.remote.NewsHeadlinesApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
@@ -39,9 +41,9 @@ object RetrofitModule
 
     @Singleton
     @Provides
-    fun provideRetrofitInstance(okHttpClient: OkHttpClient)= Retrofit.Builder()
+    fun provideRetrofitInstance(@ApplicationContext context: Context,okHttpClient: OkHttpClient)= Retrofit.Builder()
         .client(okHttpClient)
-        .baseUrl(HEADLINES_API_BASE_URL)
+        .baseUrl(context.getString(R.string.api_base_url))
         .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .build()

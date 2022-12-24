@@ -1,4 +1,4 @@
-package com.androidtask.newsapp.presentation.activities.screens
+package com.androidtask.newsapp.presentation.composescreens
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,13 +11,16 @@ import androidx.navigation.compose.rememberNavController
 import com.androidtask.newsapp.utils.Constants.NEWS_HEADLINES_LIST_ROUTE
 import com.androidtask.newsapp.utils.Constants.NEWS_HEADLINE_DETAILS_ROUTE
 import com.androidtask.newsapp.domain.models.NewsHeadlineDTO
-import com.androidtask.newsapp.presentation.activities.screens.newsheadlinedetails.setupNewsHeadlineDetailsScreen
-import com.androidtask.newsapp.presentation.activities.screens.newsheadlinelist.setupNewsHeadlineSListScreen
+import com.androidtask.newsapp.presentation.composescreens.newsheadlinedetails.setupNewsHeadlineDetailsScreen
+import com.androidtask.newsapp.presentation.composescreens.newsheadlinelist.setupNewsHeadlineSListScreen
+import com.androidtask.newsapp.presentation.viewmodels.NewsHeadlinesViewModel
 import com.androidtask.newsapp.utils.Keys.NEWS_HEADLINE_DTO
 
+//SETUP NAVIGATION COMPONENT TO DISPLAY NEWS HEADLINES LIST AND DETAILS SCREENS
+//@param newsHeadlinesViewModel USED TO PASS TO HEADLINES LIST SCREEN TO POPULATE LIST
 @Composable
 fun setupNavigationComponent(
-    newsHeadlinesListMutableState:MutableState<ArrayList<NewsHeadlineDTO>>,
+    newsHeadlinesViewModel: NewsHeadlinesViewModel,
 )
 {
     var navController = rememberNavController()
@@ -27,7 +30,7 @@ fun setupNavigationComponent(
         builder = {
             composable(
                 content = {
-                    setupNewsHeadlineSListScreen(navController,newsHeadlinesListMutableState)
+                    setupNewsHeadlineSListScreen(navController,newsHeadlinesViewModel)
                 },
                 route = NEWS_HEADLINES_LIST_ROUTE
             )
