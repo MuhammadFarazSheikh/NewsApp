@@ -2,16 +2,11 @@
     <string name="app_name">NewsApp</string>
     <string name="text_loading_label">Loading news headlines...</string>
     <string name="text_ok">OK</string>
-    <string name="text_error_network">Network error.\nCheck your internet connection or try again later.</string>
-    <string name="text_error_internal_server_error">Internal server error\nTry again later.</string>
     <string name="text_close_popup">Close popup</string>
     <string name="text_error_title">Error</string>
     <string name="text_title_label">Title:</string>
     <string name="text_description_label">Description:</string>
     <string name="text_content_label">Content:</string>
     <string name="text_go_back">Go Back</string>
-    <string name="text_something_wrong">Something went wrong\nPlease try again later.</string>
-    <string name="error_cancel_auth">Fingerprint auth is required you cannot proceed.</string>
-    <string name="error_message_wront_attempts">Open app after 30 seconds to authenticate.</string>
     <string name="api_base_url">https://newsapi.org/v2/</string>
 </resources>
