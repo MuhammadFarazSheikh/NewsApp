@@ -23,6 +23,9 @@
 
 # Build Flavours
   These are created for two news sources default will be BBC news and other is Fox news.
+  
+# DTO
+  This is written with some data models names to indicate that they are Data Transfer Objects.
 
  
   News headlines api provides latest data sorted by date and time.
